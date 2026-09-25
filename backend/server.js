@@ -12,7 +12,7 @@ app.use(cors())
 
 
 app.get("/",(req,res)=>{
-    return "API is Working";
+    res.send("API is Working");
 })
 
 async function run(linkedin) {
