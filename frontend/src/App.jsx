@@ -16,7 +16,7 @@ const App = () => {
   const backendURL=import.meta.env.VITE_BACKEND_URL;
   const findContact = async () => {
     try {
-      const response = await axios.post(`${backendURL}/api/dummy`, {
+      const response = await axios.post(`${backendURL}/api/findcontact`, {
         linkedin: linkedinURL
       });
       if(!response) return;
