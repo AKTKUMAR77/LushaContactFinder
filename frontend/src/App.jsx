@@ -19,16 +19,39 @@ const App = () => {
       const response = await axios.post(`${backendURL}/api/findcontact`, {
         linkedin: linkedinURL
       });
-      if(!response) return;
-      setFirstName(response.data.results[0].firstName);
-      setLastName(response.data.results[0].lastName);
-      setFullName(response.data.results[0].fullName);
-      setUpdateDate(response.data.results[0].updateDate);
-      setTitle(response.data.results[0].jobTitle.title);
-      setCompanyName(response.data.results[0].company.name);
-      setPhone(prev => [...prev,...response.data.results[0].phones.map(p=>p.number)]);
-      setEmail(prev => [...prev,...response.data.results[0].emails.map(p=>p.email)]);
+      const contact = response.data.results?.[0];
+
+      if (!contact) {
+          console.log("No contact found:", response.data);
+          return;
+      }
+
+      setFirstName(contact.firstName || "");
+      setLastName(contact.lastName || "");
+      setFullName(contact.fullName || "");
+      setUpdateDate(contact.updateDate || "");
+      setTitle(contact.jobTitle?.title || "");
+      setCompanyName(contact.company?.name || "");
+
+      setPhone(
+          contact.phones?.map(p => p.number) || []
+      );
+
+      setEmail(
+          contact.emails?.map(e => e.email) || []
+      );
+
       setActive(true);
+      // if(!response) return;
+      // setFirstName(response.data.results[0].firstName);
+      // setLastName(response.data.results[0].lastName);
+      // setFullName(response.data.results[0].fullName);
+      // setUpdateDate(response.data.results[0].updateDate);
+      // setTitle(response.data.results[0].jobTitle.title);
+      // setCompanyName(response.data.results[0].company.name);
+      // setPhone(prev => [...prev,...response.data.results[0].phones.map(p=>p.number)]);
+      // setEmail(prev => [...prev,...response.data.results[0].emails.map(p=>p.email)]);
+      // setActive(true);
       // console.log(response.data);
     } catch (error) {
       console.error(error);
